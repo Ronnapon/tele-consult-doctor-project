@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using tele_consult.Data.Models.Services;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace tele_consult.Controllers
 {
@@ -19,9 +21,10 @@ namespace tele_consult.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAllDoctors(string search, string specialization)
+        [Authorize]
+        public IActionResult GetAllDoctors(string search, string specialization, int page)
         {
-            var doctors = _doctorsService.GetAllDoctors(search, specialization);
+            var doctors = _doctorsService.GetAllDoctors(search, specialization, page);
             return Ok(doctors);
         }
     }
