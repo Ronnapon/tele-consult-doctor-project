@@ -65,7 +65,7 @@ namespace tele_consult.Controllers
             User user = null;  
             if (login.Username == "ronnapon" && login.Password == "1234")
             {
-                user = new User { Username = "ronnapon", EmailAddress = "ronnapon1992@live.com" };
+                user = new User { Username = "ronnapon", EmailAddress = "ronnapon.prat@gmail.com", DateOfJoing = new DateTime(2010, 08, 02) };
             }
             return user;
         }
