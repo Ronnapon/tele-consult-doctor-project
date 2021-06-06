@@ -38,7 +38,11 @@ namespace tele_consult
             services.AddControllers();
             services.AddDbContext<AppDbContext>(option => option.UseSqlServer(ConnectionString));
             services.AddTransient<DoctorsService>();
+            services.AddTransient<ClientsService>();
+            services.AddTransient<Clients_UrgentsService>();
 
+
+            
             // JWT
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>

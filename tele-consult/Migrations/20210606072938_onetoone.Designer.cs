@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using tele_consult.Data;
 
 namespace tele_consult.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210606072938_onetoone")]
+    partial class onetoone
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -35,7 +37,7 @@ namespace tele_consult.Migrations
                     b.Property<string>("CreditCard_CCV_Number")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("CreditCard_ExpDate")
+                    b.Property<DateTime>("CreditCard_ExpDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("CreditCard_Name")
@@ -85,60 +87,6 @@ namespace tele_consult.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Client_Payment_Methods");
-                });
-
-            modelBuilder.Entity("tele_consult.Data.Models.Client_Urgent", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("ClientId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Current_Address")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("DateAdded")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("DeseaseId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("FullName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ClientId");
-
-                    b.HasIndex("DeseaseId");
-
-                    b.ToTable("Client_Urgents");
-                });
-
-            modelBuilder.Entity("tele_consult.Data.Models.Desease", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("SpecializationId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("SpecializationId");
-
-                    b.ToTable("Deseases");
                 });
 
             modelBuilder.Entity("tele_consult.Data.Models.Doctor", b =>
@@ -251,36 +199,6 @@ namespace tele_consult.Migrations
                     b.Navigation("client_Payment_Method");
                 });
 
-            modelBuilder.Entity("tele_consult.Data.Models.Client_Urgent", b =>
-                {
-                    b.HasOne("tele_consult.Data.Models.Client", "client")
-                        .WithMany("client_Urgents")
-                        .HasForeignKey("ClientId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("tele_consult.Data.Models.Desease", "desease")
-                        .WithMany()
-                        .HasForeignKey("DeseaseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("client");
-
-                    b.Navigation("desease");
-                });
-
-            modelBuilder.Entity("tele_consult.Data.Models.Desease", b =>
-                {
-                    b.HasOne("tele_consult.Data.Models.Specialization", "specialization")
-                        .WithMany()
-                        .HasForeignKey("SpecializationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("specialization");
-                });
-
             modelBuilder.Entity("tele_consult.Data.Models.Doctor", b =>
                 {
                     b.HasOne("tele_consult.Data.Models.Hospital", "hospital")
@@ -309,11 +227,6 @@ namespace tele_consult.Migrations
                     b.Navigation("Doctor");
 
                     b.Navigation("Specialization");
-                });
-
-            modelBuilder.Entity("tele_consult.Data.Models.Client", b =>
-                {
-                    b.Navigation("client_Urgents");
                 });
 
             modelBuilder.Entity("tele_consult.Data.Models.Doctor", b =>

@@ -33,6 +33,9 @@ namespace tele_consult.Data
         public DbSet<Hospital> Hospitals { get; set; }
         public DbSet<Doctor_Specialization> Doctor_Specialization { get; set; }
         public DbSet<Specialization> Specialization { get; set; }
-        public DbSet<User> Users { get; set; }
+        public DbSet<Client> Clients { get; set; }
+        public DbSet<Client_Payment_Method> Client_Payment_Methods { get; set; }
+        public DbSet<Client_Urgent> Client_Urgents { get; set; }
+        public DbSet<Desease> Deseases { get; set; }
     }
 }

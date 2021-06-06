@@ -21,17 +21,8 @@ namespace tele_consult.Controllers
         }
 
         [HttpGet]
-        [Authorize]
         public IActionResult GetAllDoctors(string search, string specialization, int page)
-        {
-            // var currentUser = HttpContext.User;
-            // int spendingTimeWithCompany = 0;
-            // currentUser.HasClaim(c => c.Type == "DateOfJoing"))
-            //{
-               // DateTime date = DateTime.Parse(currentUser.Claims.FirstOrDefault(c => c.Type == "DateOfJoing").Value);
-               // spendingTimeWithCompany = DateTime.Today.Year - date.Year;
-            //}
-
+        { 
             var doctors = _doctorsService.GetAllDoctors(search, specialization, page);
             return Ok(doctors);
         }

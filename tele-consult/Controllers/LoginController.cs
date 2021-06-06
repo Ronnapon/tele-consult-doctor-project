@@ -22,9 +22,10 @@ namespace tele_consult.Controllers
         {
             _config = config;
         }
+
         [AllowAnonymous]
         [HttpPost]
-        public IActionResult Login([FromBody] User login)
+        public IActionResult Login([FromBody] Login_User login)
         {
             IActionResult response = Unauthorized();
             var user = AuthenticateUser(login);
@@ -38,14 +39,13 @@ namespace tele_consult.Controllers
             return response;
         }
 
-        private string GenerateJSONWebToken(User userInfo)
+        private string GenerateJSONWebToken(Login_User userInfo)
         {
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
             var claims = new[] {
                 new Claim(JwtRegisteredClaimNames.Sub, userInfo.Username),
-                new Claim(JwtRegisteredClaimNames.Email, userInfo.EmailAddress),
                 new Claim("DateOfJoing", userInfo.DateOfJoing.ToString("yyyy-MM-dd")),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
@@ -60,12 +60,12 @@ namespace tele_consult.Controllers
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
-        private User AuthenticateUser(User login)
+        private Login_User AuthenticateUser(Login_User login)
         {
-            User user = null;  
+            Login_User user = null;  
             if (login.Username == "ronnapon" && login.Password == "1234")
             {
-                user = new User { Username = "ronnapon", EmailAddress = "ronnapon.prat@gmail.com", DateOfJoing = new DateTime(2010, 08, 02) };
+                user = new Login_User { Username = "ronnapon", DateOfJoing = new DateTime(2010, 08, 02) };
             }
             return user;
         }

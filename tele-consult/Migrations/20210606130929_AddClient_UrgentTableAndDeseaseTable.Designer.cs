@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using tele_consult.Data;
 
 namespace tele_consult.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210606130929_AddClient_UrgentTableAndDeseaseTable")]
+    partial class AddClient_UrgentTableAndDeseaseTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -99,9 +101,6 @@ namespace tele_consult.Migrations
 
                     b.Property<string>("Current_Address")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("DateAdded")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
@@ -254,7 +253,7 @@ namespace tele_consult.Migrations
             modelBuilder.Entity("tele_consult.Data.Models.Client_Urgent", b =>
                 {
                     b.HasOne("tele_consult.Data.Models.Client", "client")
-                        .WithMany("client_Urgents")
+                        .WithMany()
                         .HasForeignKey("ClientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -309,11 +308,6 @@ namespace tele_consult.Migrations
                     b.Navigation("Doctor");
 
                     b.Navigation("Specialization");
-                });
-
-            modelBuilder.Entity("tele_consult.Data.Models.Client", b =>
-                {
-                    b.Navigation("client_Urgents");
                 });
 
             modelBuilder.Entity("tele_consult.Data.Models.Doctor", b =>

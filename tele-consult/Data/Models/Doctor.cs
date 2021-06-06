@@ -21,6 +21,5 @@ namespace tele_consult.Data.Models
         public int HospitalId { get; set; }
         public Hospital hospital { get; set; }
         public List<Doctor_Specialization> Doctor_Specialization { get; set; }
-
     }
 }
