@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace tele_consult.Data.Models
+namespace tele_consult.Data.ViewModel
 {
-    public class Login_User
+    public class UserVM
     {
-        public int Id { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
-        public DateTime DateOfJoing { get; set; }
+
+        // Nevigator properties
+        public int RoleId { get; set; }
     }
 }

@@ -1,12 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Mvc;
 using tele_consult.Data.Models.Services;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+using tele_consult.Data.ViewModel;
 
 namespace tele_consult.Controllers
 {
@@ -20,11 +14,39 @@ namespace tele_consult.Controllers
             _doctorsService = doctorsService;
         }
 
+        [HttpPost]
+        public IActionResult AddDoctor([FromBody] DoctorVM doctor)
+        {
+            _doctorsService.AddDoctor(doctor);
+            return Ok();
+        }
+
         [HttpGet]
         public IActionResult GetAllDoctors(string search, string specialization, int page)
         { 
             var doctors = _doctorsService.GetAllDoctors(search, specialization, page);
             return Ok(doctors);
+        }
+
+        [HttpGet("{Id}")]
+        public IActionResult GetDoctor(int Id)
+        {
+            var doctor = _doctorsService.GetDoctor(Id);
+            return Ok(doctor);
+        }
+
+        [HttpPut("{Id}")]
+        public IActionResult UpdateDoctor([FromBody] DoctorVM doctor,int Id)
+        {
+            _doctorsService.UpdateDoctor(doctor,Id);
+            return Ok();
+        }
+
+        [HttpDelete]
+        public IActionResult DeleteDoctor(int Id)
+        {
+            _doctorsService.GetDoctor(Id);
+            return Ok();
         }
     }
 }

@@ -25,7 +25,7 @@ namespace tele_consult.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        public IActionResult Login([FromBody] Login_User login)
+        public IActionResult Login([FromBody] User login)
         {
             IActionResult response = Unauthorized();
             var user = AuthenticateUser(login);
@@ -39,7 +39,7 @@ namespace tele_consult.Controllers
             return response;
         }
 
-        private string GenerateJSONWebToken(Login_User userInfo)
+        private string GenerateJSONWebToken(User userInfo)
         {
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
@@ -60,12 +60,12 @@ namespace tele_consult.Controllers
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
-        private Login_User AuthenticateUser(Login_User login)
+        private User AuthenticateUser(User login)
         {
-            Login_User user = null;  
+            User user = null;  
             if (login.Username == "ronnapon" && login.Password == "1234")
             {
-                user = new Login_User { Username = "ronnapon", DateOfJoing = new DateTime(2010, 08, 02) };
+                user = new User { Username = "ronnapon", DateOfJoing = new DateTime(2010, 08, 02) };
             }
             return user;
         }

@@ -37,5 +37,7 @@ namespace tele_consult.Data
         public DbSet<Client_Payment_Method> Client_Payment_Methods { get; set; }
         public DbSet<Client_Urgent> Client_Urgents { get; set; }
         public DbSet<Desease> Deseases { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Role> Roles { get; set; }
     }
 }

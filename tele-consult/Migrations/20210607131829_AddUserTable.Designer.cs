@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using tele_consult.Data;
 
 namespace tele_consult.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210607131829_AddUserTable")]
+    partial class AddUserTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -222,21 +224,6 @@ namespace tele_consult.Migrations
                     b.ToTable("Hospitals");
                 });
 
-            modelBuilder.Entity("tele_consult.Data.Models.Role", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Roles");
-                });
-
             modelBuilder.Entity("tele_consult.Data.Models.Specialization", b =>
                 {
                     b.Property<int>("Id")
@@ -265,18 +252,13 @@ namespace tele_consult.Migrations
                     b.Property<string>("Password")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("RoleId")
-                        .HasColumnType("int");
-
-                    b.Property<byte[]>("Salt")
-                        .HasColumnType("varbinary(max)");
-
                     b.Property<string>("Username")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.Property<int>("roleId")
+                        .HasColumnType("int");
 
-                    b.HasIndex("RoleId");
+                    b.HasKey("Id");
 
                     b.ToTable("Users");
                 });
@@ -350,17 +332,6 @@ namespace tele_consult.Migrations
                     b.Navigation("Doctor");
 
                     b.Navigation("Specialization");
-                });
-
-            modelBuilder.Entity("tele_consult.Data.Models.User", b =>
-                {
-                    b.HasOne("tele_consult.Data.Models.Role", "role")
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("role");
                 });
 
             modelBuilder.Entity("tele_consult.Data.Models.Client", b =>

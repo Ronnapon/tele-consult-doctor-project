@@ -40,9 +40,10 @@ namespace tele_consult
             services.AddTransient<DoctorsService>();
             services.AddTransient<ClientsService>();
             services.AddTransient<Clients_UrgentsService>();
+            services.AddTransient<UsersService>();
 
 
-            
+
             // JWT
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>

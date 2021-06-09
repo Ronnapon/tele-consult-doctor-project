@@ -25,13 +25,60 @@ namespace tele_consult.Controllers
         public IActionResult AddNewClient([FromBody] ClientVM client)
         {
             // Check Validate
+            if(ValidatePaymentMethod(client) != "")
+            {
+                return BadRequest(ValidatePaymentMethod(client));
+            }
+
+            _clientsService.AddNewClient(client);
+            return Ok();
+        }
+
+        [HttpGet]
+        public IActionResult GetAllClients(string search)
+        {
+            // Check Validate
+            var clients = _clientsService.GetAllClients(search);
+            return Ok(clients);
+        }
+
+        [HttpGet("{Id}")]
+        public IActionResult GetClient(int Id)
+        {
+            var clients = _clientsService.GetClient(Id);
+            return Ok(clients);
+        }
+
+        [HttpPut("{Id}")]
+        public IActionResult AddNewClient([FromBody] ClientVM client, int Id)
+        {
+            // Check Validate
+            if (ValidatePaymentMethod(client) != "")
+            {
+                return BadRequest(ValidatePaymentMethod(client));
+            }
+
+            _clientsService.UpdateClient(client,Id);
+            return Ok();
+        }
+
+        [HttpDelete("{Id}")]
+        public IActionResult DeleteClient(int Id)
+        {
+            _clientsService.DeleteClient(Id);
+            return Ok();
+        }
+
+        private string ValidatePaymentMethod(ClientVM client)
+        {
+            var ErrorMessge = ""; 
             if (client.Client_Payment_MethodId == 3)
             {
-                if (client.CreditCard_Number == "" 
-                    || client.CreditCard_CCV_Number == "" 
+                if (client.CreditCard_Number == ""
+                    || client.CreditCard_CCV_Number == ""
                     || client.CreditCard_Name == "")
                 {
-                    return BadRequest("CreditCard Information is requited");
+                    ErrorMessge =  "CreditCard Information is requited";
                 }
             }
             else
@@ -40,11 +87,10 @@ namespace tele_consult.Controllers
                    || client.CreditCard_CCV_Number != ""
                    || client.CreditCard_Name != "")
                 {
-                    return BadRequest("CreditCard Information is not requited");
+                    ErrorMessge = "CreditCard Information is not requited";
                 }
             }
-            _clientsService.AddNewClient(client);
-            return Ok();
+            return ErrorMessge;
         }
     }
 }
